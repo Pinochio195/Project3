@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - WallEndMap
+  - MeshCollider
+  - Enemy
+  - Weapon
+  - CheckPlayer
+  - CheckEnemy
   layers:
   - Default
   - TransparentFX
@@ -11,12 +17,12 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - CheckEnemy
+  - CheckPlayer
+  - Weapon
+  - Ground
   - 
   - 
   - 

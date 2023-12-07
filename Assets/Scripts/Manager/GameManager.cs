@@ -18,7 +18,16 @@ public class GameManager : RingSingleton<GameManager>
     {
         
     }
-
+    public void GetBotControllerAddList(Transform enemy)
+    {
+        _gameController._listBot.Add(enemy.GetComponent<BotController>());
+    }
+    #region Save Game
+    public void Save_WeaponPlayer(string nameWeaponSave)
+    {
+        PlayerPrefs.SetString(Settings.Save_WeaponName, nameWeaponSave);
+    }
+    #endregion
     #region Method Game
 
     public bool CheckUIReturn()

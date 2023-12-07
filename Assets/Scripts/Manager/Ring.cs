@@ -1,7 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.AI;
 
 namespace Ring
 {
@@ -9,12 +10,63 @@ namespace Ring
     [Serializable]
     public class GameController
     {
-        [ChangeColorLabel(0.2f, 1, 1)] public GameObject _player;
+        [ChangeColorLabel(0.2f, 1, 1)] public List<BotController> _listBot;
+        [ChangeColorLabel(0.2f, 1, 1)] public List<BotController> _listBotInDeathZone;
+        [ChangeColorLabel(0.2f, 1, 1)] public List<Transform> _listPositionMove;
+
     }
     [Serializable]
-    public class Player_Component
+    public class BotManager
     {
-        [ChangeColorLabel(0.2f, 1, 1)] public Rigidbody _rigidbodyWeapon;
+        [ChangeColorLabel(0.2f, 1, 1)] public Animator _animator;
+        [ChangeColorLabel(0.2f, 1, 1)] public List<Material> _ShortMaterialsRandom;
+        [ChangeColorLabel(0.2f, 1, 1)] public List<Texture> _ShortSpritesRandom;
+        [ChangeColorLabel(0.2f, 1, 1)] public SkinnedMeshRenderer _ShortSkinnedMeshRendererBot;
+        [ChangeColorLabel(0.2f, 1, 1)] public Material _ShortMaterialBot;
+        [ChangeColorLabel(0.2f, 1, 1)] public SkinnedMeshRenderer _BodySkinnedMeshRendererBot;
+        [Space(2)]
+        [ChangeColorLabel(0.2f, 1, 1)] public List<GameObject> _listAccessory;
+        [ChangeColorLabel(0.2f, 1, 1)] public CheckPlayer _checkPlayer;
+        [HeaderTextColor(0.8f, 1f, 1f, headerText = "Check State Của Enemy")]
+        [ChangeColorLabel(0.2f, 1, 1)] public bool _isCheckDieEnemy;
+        [HeaderTextColor(0.8f, 1f, 1f, headerText = "AI Nav Mesh")]
+        [ChangeColorLabel(0.2f, 1, 1)] public NavMeshAgent _navMeshAgent;
+        [HeaderTextColor(0.8f, 1f, 1f, headerText = "Die bot")]
+        [ChangeColorLabel(0.2f, 1, 1)] public Collider _collider;
+        [ChangeColorLabel(0.2f, 1, 1)] public Rigidbody _rigidbody;
+        [ChangeColorLabel(0.2f, 1, 1)] public GameObject _listCirlce;
+        [ChangeColorLabel(0.2f, 1, 1)] public ParticleSystem _particleSystem;
+
+    }
+    [Serializable]
+    public class PlayerController
+    {
+        [ChangeColorLabel(0.2f, 1, 1)] public Rigidbody _rigidbody;
+        [ChangeColorLabel(0.2f, 1, 1)] public Animator _animator;
+        [ChangeColorLabel(0.2f, 1, 1)] public Transform _mesh;
+        [HeaderTextColor(0.8f, 1f, 1f, headerText = "Dùng để vẽ ra deadzone để hiển thị trên game / không sử dụng trong code")]
+        [Range(0.1f,15f)]
+        [ChangeColorLabel(0.2f, 1, 1)] public float radius;
+        [HeaderTextColor(0.8f, 1f, 1f, headerText = "Hướng bắn/di chuyển của player")]
+        [ChangeColorLabel(0.2f, 1, 1)] public Vector3 _direction;
+        [ChangeColorLabel(0.2f, 1, 1)] public Vector3 _currentDirection;
+        [HideInInspector] public BotController _botController;
+        [HeaderTextColor(0.8f, 1f, 1f, headerText = "Điểm bắt đầu của player")]
+        [ChangeColorLabel(0.2f, 1, 1)] public List<Transform> _listTransformStart;
+        [HeaderTextColor(0.8f, 1f, 1f, headerText = "Attack cho Player")]
+        [ChangeColorLabel(0.2f, 1, 1)] public Attack _attackEvent;
+        [HeaderTextColor(0.8f, 1f, 1f, headerText = "Check List Enemy")]
+        [ChangeColorLabel(0.2f, 1, 1)] public CheckListEnemy _checkListEnemy;
+
+    }
+    [Serializable]
+    public class PlayerWeapon
+    {
+        [HeaderTextColor(0.8f, 1f, 1f, headerText = "Nơi sinh ra vũ khí của player")]
+        [ChangeColorLabel(0.2f, 1, 1)] public Transform _transformWeapon;
+        [ChangeColorLabel(0.2f, 1, 1)] public GameObject  _weaponPlayerThrowed;
+        //[ChangeColorLabel(0.2f, 1, 1)] public List<GameObject>  _listWeaponPrefabs;
+
     }
 
     [Serializable]
@@ -77,7 +129,7 @@ namespace Ring
             HeaderTextColorAttribute attribute = (HeaderTextColorAttribute)this.attribute;
             string headerText = attribute.headerText;
 
-            Rect labelRect = new Rect(position.x, position.y, EditorGUIUtility.labelWidth + 100, 50);
+            Rect labelRect = new Rect(position.x, position.y, EditorGUIUtility.labelWidth + 500, 50);
             EditorGUI.LabelField(labelRect, headerText, headerStyle);
         }
     }
