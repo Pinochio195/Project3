@@ -18,6 +18,7 @@ public class Attack : MonoBehaviour
     public void ResetIdle()
     {
         playerManager._playerController._animator.SetInteger(Settings.Animation_Player, 0);
+        CheckWinGame();
     }
 
     public void ResetCheckEnemy()
@@ -33,5 +34,18 @@ public class Attack : MonoBehaviour
     {
         weapon.SetActive(false);
         PlayerManager.Instance._playerWeapon._weaponPlayerThrowed = LeanPool.Spawn(_listWeaponPrefabs[0], PlayerManager.Instance._playerWeapon._transformWeapon.position, Quaternion.identity);
+        MusicManager.Instance.PlayAudio_Attack();
+    }
+
+    public void CheckWinGame()
+    {
+        if (GameManager.Instance._gameController._listBot.Count <= 0)
+        {
+            UiManager.Instance.OpenUI<Win>();
+        }
+        else
+        {
+            Debug.Log("tiếp tục chơi");
+        }
     }
 }

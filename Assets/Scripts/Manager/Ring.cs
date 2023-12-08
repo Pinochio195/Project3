@@ -36,6 +36,9 @@ namespace Ring
         [ChangeColorLabel(0.2f, 1, 1)] public Rigidbody _rigidbody;
         [ChangeColorLabel(0.2f, 1, 1)] public GameObject _listCirlce;
         [ChangeColorLabel(0.2f, 1, 1)] public ParticleSystem _particleSystem;
+        [HeaderTextColor(0.8f, 1f, 1f, headerText = "State Machine")]
+        [ChangeColorLabel(0.2f, 1, 1)] public Transform _transformAttack;
+        [ChangeColorLabel(0.2f, 1, 1)] public Transform _meshBot;
 
     }
     [Serializable]
@@ -73,7 +76,8 @@ namespace Ring
     public class MusicController
     {
         [ChangeColorLabel(0.2f, 1, 1)] public AudioSource audioSource_;
-        [ChangeColorLabel(0.9f, .55f, .95f)] public AudioClip audioClip_;
+        [ChangeColorLabel(0.9f, .55f, .95f)] public AudioClip audioClip_Attack;
+        [ChangeColorLabel(0.9f, .55f, .95f)] public AudioClip audioClip_Die;
     }
 
     [Serializable]
@@ -331,6 +335,10 @@ namespace Ring
 
                     if (_instance == null)
                     {
+                        GameObject singleton = new GameObject();
+                        _instance = singleton.AddComponent<T>();
+                        singleton.name = typeof(T).ToString() + " (Singleton)";
+
                         Debug.LogError("An instance of " + typeof(T) +
                                        " is needed in the scene, but there is none.");
                     }

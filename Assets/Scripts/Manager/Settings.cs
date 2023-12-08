@@ -5,6 +5,7 @@ public static class Settings
     public static string Tag_Enemy = "Enemy";
     public static string Tag_Player = "Player";
     public static string Tag_Weapon = "Weapon";
+    public static string Tag_Cup = "Cup";
     public static string Tag_CheckEnemy = "CheckEnemy";
     public static string Save_WeaponName = "Weapon";
 

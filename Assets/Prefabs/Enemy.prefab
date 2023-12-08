@@ -1966,6 +1966,7 @@ MonoBehaviour:
     _rigidbody: {fileID: 6004785987412457915}
     _listCirlce: {fileID: 2209072700714533570}
     _particleSystem: {fileID: 6602358623274710203}
+    _listTransformAttack: []
 --- !u!114 &3755463632669564739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2742,10 +2743,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCheckDetectionObject: 0
+  isCheckDetectionObjectBotController: 0
   _listCircle:
   - {fileID: 5188907475257386059}
   - {fileID: 1544412377091937654}
   _botController: {fileID: 7030806519526514064}
+  _meshBot: {fileID: 1005498263281535981}
+  _objectAttack: {fileID: 0}
 --- !u!1 &8710904611198039808
 GameObject:
   m_ObjectHideFlags: 0

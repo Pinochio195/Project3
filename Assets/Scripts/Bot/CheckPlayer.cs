@@ -4,19 +4,45 @@ using UnityEngine;
 
 public class CheckPlayer : MonoBehaviour
 {
-    [SerializeField] private bool isCheckDetectionObject;
+    [SerializeField] public bool isCheckDetectionObject;
+    [SerializeField] public bool isCheckDetectionObjectBotController;
     [ChangeColorLabel(0.2f, 1, 1)] public List<GameObject> _listCircle;
     [ChangeColorLabel(0.2f, 1, 1)] public BotController _botController;
+    [ChangeColorLabel(0.2f, 1, 1)] public Transform _meshBot;
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag(Settings.Tag_Player))
         {
             var gameController = GameManager.Instance._gameController;
-            gameController._listBotInDeathZone.Add(_botController);
+            if (!gameController._listBotInDeathZone.Contains(_botController))
+            {
+                gameController._listBotInDeathZone.Add(_botController);
+            }
+
             ActiveCircleDownEnemy(other.gameObject);
         }
+        if (other.CompareTag(Settings.Tag_Enemy) || other.CompareTag(Settings.Tag_Player))
+        {
+            GetTargetAttack(other.transform);
+        }
     }
+
+    #region State Machine Bot
+
+    private void GetTargetAttack(Transform other)
+    {
+        if (!isCheckDetectionObjectBotController)
+        {
+            isCheckDetectionObjectBotController = true;
+            if (_botController._botController._transformAttack == null)
+            {
+                _botController._botController._transformAttack = other.transform;
+            }
+        }
+    }
+
+    #endregion State Machine Bot
 
     private void ActiveCircleDownEnemy(GameObject objectA)
     {
@@ -33,7 +59,6 @@ public class CheckPlayer : MonoBehaviour
             {
                 isCheckDetectionObject = true;
                 PlayerManager.Instance._playerController._botController = FindNearestObject(objectA);
-                Debug.Log(PlayerManager.Instance._playerController._botController);
                 _listCircle.ForEach(a => a.SetActive(true));
             }
         }
@@ -45,6 +70,13 @@ public class CheckPlayer : MonoBehaviour
         {
             isCheckDetectionObject = false;
             _listCircle.ForEach(a => a.SetActive(false));
+            var gameController = GameManager.Instance._gameController;
+            gameController._listBotInDeathZone.Remove(_botController);
+        }
+        if (other.CompareTag(Settings.Tag_Enemy) || other.CompareTag(Settings.Tag_Player))
+        {
+            _botController._botController._transformAttack = null;
+            isCheckDetectionObjectBotController = false;
         }
     }
 

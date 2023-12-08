@@ -11,6 +11,7 @@ public class GameManager : RingSingleton<GameManager>
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
+        UiManager.Instance.OpenUI<MainMenu>();
     }
 
     // Update is called once per frame

@@ -1,5 +1,4 @@
-﻿using Lean.Pool;
-using Ring;
+﻿using Ring;
 using System.Collections;
 using UnityEngine;
 
@@ -7,6 +6,7 @@ public class CheckListEnemy : MonoBehaviour
 {
     public bool isCheckDetectionObject;
     [ChangeColorLabel(0.2f, 1, 1)] public Transform _mesh;
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -19,16 +19,14 @@ public class CheckListEnemy : MonoBehaviour
         }
     }
 
+   
+
     private IEnumerator DelayAttackEnemy()
     {
         yield return new WaitForSeconds(.2f);
         if (PlayerManager.Instance._playerController._botController != null)
         {
-            Debug.Log(123);
             CheckRotatePlayer(PlayerManager.Instance._playerController._botController.transform);
-        }
-        else
-        {
         }
     }
 
@@ -40,6 +38,7 @@ public class CheckListEnemy : MonoBehaviour
             isCheckDetectionObject = true;
             //Debug.Log($"Index animation {PlayerManager.Instance._playerController._animator.GetInteger(Settings.Animation_Player)}");
             //attack this
+            //UIManager.Instance.OpenUI<Win>();
             PlayerManager.Instance._playerController._animator.SetInteger(Settings.Animation_Player, 2);
         }
     }

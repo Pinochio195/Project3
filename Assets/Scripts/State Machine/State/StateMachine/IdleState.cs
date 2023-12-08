@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class IdleState : State
@@ -29,13 +30,20 @@ public class IdleState : State
         }
         else
         {
-            if (TimeDelay > 5)
+            if (botController._botController._transformAttack != null)
             {
-                stateMachine.ChangeState(botController.runState);
+                //stateMachine.ChangeState(botController.attackState);
             }
             else
             {
-                TimeDelay += Time.deltaTime;
+                if (TimeDelay > 5)
+                {
+                    stateMachine.ChangeState(botController.runState);
+                }
+                else
+                {
+                    TimeDelay += Time.deltaTime;
+                }
             }
         }
     }
@@ -44,4 +52,6 @@ public class IdleState : State
     {
         base.PhysicsUpdate();
     }
+    
+   
 }

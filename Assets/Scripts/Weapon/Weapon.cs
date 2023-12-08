@@ -33,6 +33,7 @@ public class Weapon : MonoBehaviour
         {
             PlayerManager.Instance._playerController._attackEvent.weapon.SetActive(true);
             LeanPool.Despawn(PlayerManager.Instance._playerWeapon._weaponPlayerThrowed);
+            MusicManager.Instance.PlayAudio_Die();
         }
     }
 
@@ -41,6 +42,7 @@ public class Weapon : MonoBehaviour
         if (other.gameObject.CompareTag(Settings.Tag_CheckEnemy))
         {
             Debug.Log(other.gameObject.name);
+            PlayerManager.Instance._playerController._botController = null;
             LeanPool.Despawn(PlayerManager.Instance._playerWeapon._weaponPlayerThrowed);
         }
     }

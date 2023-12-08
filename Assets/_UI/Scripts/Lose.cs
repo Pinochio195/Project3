@@ -9,7 +9,7 @@ public class Lose : UICanvas
 
     public void MainMenuButton()
     {
-        UIManager.Ins.OpenUI<MianMenu>();
+        UiManager.Instance.OpenUI<MainMenu>();
         Close();
     }
 }

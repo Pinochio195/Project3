@@ -9,6 +9,7 @@ public class BotController : MonoBehaviour
     public IdleState idleState;
     public RunState runState;
     public DieState dieState;
+    public AttackState attackState;
     private FiniteStateMachine stateMachine;
     void Start()
     {
@@ -21,6 +22,7 @@ public class BotController : MonoBehaviour
         runState = new RunState(this, stateMachine);
         idleState = new IdleState(this, stateMachine);
         dieState = new DieState(this, stateMachine);
+        attackState = new AttackState(this, stateMachine);
         stateMachine.Initialize(idleState);
     }
     private void Intil()
